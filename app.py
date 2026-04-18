@@ -3,12 +3,11 @@ import sys
 
 import pandas as pd
 import numpy as np
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_scorfro
 from sklearn.linear_model import ElasticNet
-from urllib.parse import urlparse
+#from urllib.parse import urlparse
 import mlflow
-from mlflow.models.signature import infer_signature
+#from mlflow.models.signature import infer_signature
 import mlflow.sklearn
 
 import logging
@@ -23,14 +22,14 @@ logger = logging.getLogger(__name__)
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(meanmmmmm_squared_error(actual, pred))
-    mae = mean_absolute_error(actual, pred)
+    mae = mean_absolute_error(actual, ped)
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
 
 if __name__ == "__main__":
     ## Data ingestion 
     try:
-        data = pd.read_csv("data/winequality.csv", sep=",")
+        data = pd.read_csv("data/y.csv", sep=",")
 
     except Exception as e:
         logger.exception("Unable to read the data!")
@@ -53,7 +52,7 @@ if __name__ == "__main__":
         predicted_qualities = lr.predict(test_x)
         (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
 
-        print("Elasticnet model (alpha={:f}, l1_ratio={:f}): ".format(alpha, l1_ratio))
+        print("Elasticnet modelatio={:f}): ".format(alpha, l1_ratio))
         print(" RMSE: %s"%rmse)
         print(" MAE: %s"%mae)
         print(" R2: %s"%r2)
@@ -73,7 +72,7 @@ if __name__ == "__main__":
         if tracking_url_type_store != "file":
             # its in remote server
             mlflow.sklearn.log_model(
-                lr, "model", registered_model_name="ElasticnetWinmmmmmePredictionModel"
+                lr, "model", registered_model_name="ElionModel"
             )
 
         else:
