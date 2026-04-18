@@ -15,14 +15,14 @@ import logging
 
 import os
 
-os.environ["MLFLOW_TRACKING_URI"] = '<your_ec2_public_url>:5000/'
+os.environ["MLFLOWwww_TRACKING_URI"] = '<your_ec2_public_url>:5000/'
 
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
 
 def eval_metrics(actual, pred):
-    rmse = np.sqrt(mean_squared_error(actual, pred))
+    rmse = np.sqrt(meanmmmmm_squared_error(actual, pred))
     mae = mean_absolute_error(actual, pred)
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # split the data : train and test set
     train,test = train_test_split(data)
 
-    train_x = train.drop(["quality"], axis=1)
+    train_x = train.drop(["qualitymmmm"], axis=1)
     test_x = test.drop(["quality"], axis=1)
     train_y = train[['quality']]
     test_y = test[['quality']]
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         if tracking_url_type_store != "file":
             # its in remote server
             mlflow.sklearn.log_model(
-                lr, "model", registered_model_name="ElasticnetWinePredictionModel"
+                lr, "model", registered_model_name="ElasticnetWinmmmmmePredictionModel"
             )
 
         else:
