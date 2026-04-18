@@ -13,16 +13,13 @@ import mlflow.sklearn
 
 import logging
 
-import os
-
-os.environ["MLFLOWwww_TRACKING_URI"] = '<your_ec2_public_url>:5000/'
+os.environ['MLFLOW_TRACKING_URI'] = '<your_ec2_public_url>:5000/'
 
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
-
 def eval_metrics(actual, pred):
-    rmse = np.sqrt(meanmmmmm_squared_error(actual, pred))
+    rmse = np.sqrt(mean_squared_error(actual, pred))
     mae = mean_absolute_error(actual, pred)
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
@@ -34,14 +31,9 @@ if __name__ == "__main__":
 
     except Exception as e:
         logger.exception("Unable to read the data!")
-
+    
     # split the data : train and test set
-    train,test = train_test_split(data)
-
-    train_x = train.drop(["qualitymmmm"], axis=1)
-    test_x = test.drop(["quality"], axis=1)
-    train_y = train[['quality']]
-    test_y = test[['quality']]
+    train_x, test_x, train_y, test_y = train_test_split(data.drop("quality", axis=1), data["quality"], test_size=0.2, random_state=42)
 
     alpha = float(sys.argv[1]) if len(sys.argv) > 1 else 0.5
     l1_ratio = float(sys.argv[2]) if len(sys.argv) > 2 else 0.5
@@ -51,7 +43,7 @@ if __name__ == "__main__":
         lr.fit(train_x, train_y)
 
         predicted_qualities = lr.predict(test_x)
-        (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
+        (rmse, mae, r2) = eval_metrics(train_y, predicted_qualities)
 
         print("Elasticnet model (alpha={:f}, l1_ratio={:f}): ".format(alpha, l1_ratio))
         print(" RMSE: %s"%rmse)
@@ -73,9 +65,8 @@ if __name__ == "__main__":
         if tracking_url_type_store != "file":
             # its in remote server
             mlflow.sklearn.log_model(
-                lr, "model", registered_model_name="ElasticnetWinmmmmmePredictionModel"
+                lr, "model", registered_model_name="ElasticnetWinePredictionModel"
             )
 
         else:
             mlflow.sklearn.log_model(lr, "model")
-
